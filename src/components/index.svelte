@@ -1,6 +1,6 @@
 <script context="module">
-    import RecipeCard from "./RecipeCard.svelte";
     import Nav from "./Nav.svelte";
+    import Recipes from "./Recipes.svelte";
 
-    export { RecipeCard, Nav }
+    export { Nav, Recipes }
 </script>
