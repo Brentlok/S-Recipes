@@ -6,7 +6,7 @@ import {
     RecipesRecord,
 } from '~/types';
 
-export type Record<T> =
+export type Data<T> =
     T extends Collections.Recipes ? RecipesRecord:
     never;
 
@@ -30,16 +30,16 @@ class PocketBase {
     }
 
     list = <T extends Collections>(collection: T) => 
-        this.client.collection(collection).getList<Record<T> & BaseSystemFields>();
+        this.client.collection(collection).getList<Data<T> & BaseSystemFields>();
 
     get = <T extends Collections>(collection: T, id: string) => 
-        this.client.collection(collection).getOne<Record<T> & BaseSystemFields>(id);
+        this.client.collection(collection).getOne<Data<T> & BaseSystemFields>(id);
 
-    create = <T extends Collections>(collection: T, data: Record<T>) => {
-        return this.client.collection(collection).create<Record<T>>(data);
+    create = <T extends Collections>(collection: T, data: Data<T>) => {
+        return this.client.collection(collection).create<Data<T>>(data);
     }
 
-    getFile = <T extends Collections>(record: Record<T>, path?: string, imageSize = ImageSize.small) => {
+    getFile = <T extends Collections>(record: Data<T>, path?: string, imageSize = ImageSize.small) => {
         if(!path) {
             return '';
         }

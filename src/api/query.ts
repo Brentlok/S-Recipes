@@ -1,6 +1,6 @@
 import { Writable, writable } from "svelte/store";
 import type { BaseSystemFields, Collections } from "~/types";
-import { pocketbase, Record } from "./pocketbase";
+import { pocketbase, Data } from "./pocketbase";
 
 abstract class Query<T extends Collections> {
     isLoading = writable(false);
@@ -20,10 +20,15 @@ abstract class Query<T extends Collections> {
 }
 
 class List<T extends Collections> extends Query<T> {
-    data = writable<Array<Record<T> & BaseSystemFields>>([]);
+    data = writable<Array<Data<T> & BaseSystemFields>>([]);
 
     get items() {
         return this.data;
+    }
+
+    fillWith = (data: Array<Data<T> & BaseSystemFields>) => {
+        this.data.set(data);
+        return this;
     }
 
     refetch = async () => {
@@ -43,7 +48,7 @@ class List<T extends Collections> extends Query<T> {
 }
 
 class Single<T extends Collections> extends Query<T> {
-    data = writable<Record<T> | undefined>();
+    data = writable<Data<T> | undefined>();
 
     refetch = async (id?: string) => {
         if(!id) {

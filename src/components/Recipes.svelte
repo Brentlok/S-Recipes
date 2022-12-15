@@ -1,11 +1,14 @@
 <script type="ts">
     import { pocketbase, useList } from "~/api";
+    import type { Data } from "~/api/pocketbase";
     import { watchLinks } from "~/hooks";
-    import { Collections } from "~/types";
+    import { BaseSystemFields, Collections } from "~/types";
     import Loading from "./Loading.svelte";
     import RecipeCard from "./RecipeCard.svelte";
 
-    const { isLoading, items } = useList(Collections.Recipes).fetch();
+    export let recipes: Array<Data<Collections.Recipes> & BaseSystemFields>;
+
+    const { isLoading, items } = useList(Collections.Recipes).fillWith(recipes);
     watchLinks();
 </script>
     
