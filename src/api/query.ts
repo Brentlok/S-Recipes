@@ -1,5 +1,5 @@
 import { Writable, writable } from "svelte/store";
-import type { Collections } from "~/types";
+import type { BaseSystemFields, Collections } from "~/types";
 import { pocketbase, Record } from "./pocketbase";
 
 abstract class Query<T extends Collections> {
@@ -12,6 +12,7 @@ abstract class Query<T extends Collections> {
     constructor(readonly collection: T, private id?: string) {}
 
     fetch = () => {
+        console.log('here');
         this.refetch(this.id);
         return this;
     }
@@ -20,7 +21,7 @@ abstract class Query<T extends Collections> {
 }
 
 class List<T extends Collections> extends Query<T> {
-    data = writable<Array<Record<T>>>([]);
+    data = writable<Array<Record<T> & BaseSystemFields>>([]);
 
     get items() {
         return this.data;

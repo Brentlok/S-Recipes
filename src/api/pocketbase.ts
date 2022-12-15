@@ -1,13 +1,26 @@
 import Client, { Record as BaseRecord } from 'pocketbase';
-import type { 
+import { 
     BaseSystemFields,
     Collections,
+    ImageSize,
     RecipesRecord,
 } from '~/types';
 
 export type Record<T> =
     T extends Collections.Recipes ? RecipesRecord:
     never;
+
+const getThumbByImageSize = (imageSize: ImageSize) => {
+    switch(imageSize) {
+        case ImageSize.small:
+            return '640x0';
+        case ImageSize.medium:
+            return '1280x0';
+        case ImageSize.big:
+        default:
+            return '1600x0';
+    }
+}
 
 class PocketBase {
     private client: Client;
@@ -23,15 +36,16 @@ class PocketBase {
         this.client.collection(collection).getOne<Record<T> & BaseSystemFields>(id);
 
     create = <T extends Collections>(collection: T, data: Record<T>) => {
-        return this.client.collection(collection).create<Record<T> & BaseSystemFields>(data);
+        return this.client.collection(collection).create<Record<T>>(data);
     }
 
-    getFile = <T extends Collections>(record: Record<T>, path?: string) => {
+    getFile = <T extends Collections>(record: Record<T>, path?: string, imageSize = ImageSize.small) => {
         if(!path) {
             return '';
         }
 
-        return this.client.getFileUrl(record as unknown as BaseRecord, path);
+        const thumb = getThumbByImageSize(imageSize);
+        return this.client.getFileUrl(record as unknown as BaseRecord, path, { thumb });
     }
 }
 

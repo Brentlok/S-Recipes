@@ -1,0 +1,10 @@
+---
+import Layout from "~/layouts/Layout.astro"
+import Recipe from "~/partials/Recipe.svelte";
+
+const { id } = Astro.params;
+---
+
+<Layout title={String(id)}>
+    <Recipe id={String(id)} client:idle />
+</Layout>
