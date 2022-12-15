@@ -1,10 +1,12 @@
 ---
+import { pocketbase } from "~/api";
 import Layout from "~/layouts/Layout.astro"
 import Recipe from "~/partials/Recipe.svelte";
+import { Collections } from "~/types";
 
-const { id } = Astro.params;
+const recipe = await pocketbase.get(Collections.Recipes, String(Astro.params.id));
 ---
 
-<Layout title={String(id)}>
-    <Recipe id={String(id)} client:idle />
+<Layout title={recipe.title}>
+    <Recipe recipe={recipe} client:idle />
 </Layout>

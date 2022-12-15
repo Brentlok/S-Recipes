@@ -1,25 +1,18 @@
 <script type="ts">
-    import { pocketbase, useSingle } from "~/api";
-    import Loading from "~/components/Loading.svelte";
-    import { Collections, ImageSize } from "~/types";
+    import { pocketbase } from "~/api";
+    import { BaseSystemFields, ImageSize, RecipesRecord } from "~/types";
 
-    export let id: string;
-
-    const { isLoading, data } = useSingle(Collections.Recipes, id).fetch();
+    export let recipe: RecipesRecord & BaseSystemFields;
 </script>
 
-{#if $isLoading || !$data}
-    <Loading />
-{:else}
-    <div>
-        <div class="max-w-7xl mx-auto">
-            <h1 class="text-3xl">
-                {$data.title}
-            </h1>
-            <img class="my-4" src={pocketbase.getFile($data, $data.image, ImageSize.big)} alt={$data.title} />
-            <span class="tracking-wider">
-                {$data.description}
-            </span>    
-        </div>
+<div>
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl">
+            {recipe.title}
+        </h1>
+        <img class="my-4" src={pocketbase.getFile(recipe, recipe.image, ImageSize.big)} alt={recipe.title} />
+        <span class="tracking-wider">
+            {recipe.description}
+        </span>    
     </div>
-{/if}
+</div>
