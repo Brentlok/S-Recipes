@@ -1,10 +1,12 @@
 <script type="ts">
     import { pocketbase, useList } from "~/api";
+    import { watchLinks } from "~/hooks";
     import { Collections } from "~/types";
     import Loading from "./Loading.svelte";
     import RecipeCard from "./RecipeCard.svelte";
 
     const { isLoading, items } = useList(Collections.Recipes).fetch();
+    watchLinks();
 </script>
     
 {#if $isLoading}
