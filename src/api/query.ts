@@ -12,7 +12,6 @@ abstract class Query<T extends Collections> {
     constructor(readonly collection: T, private id?: string) {}
 
     fetch = () => {
-        console.log('here');
         this.refetch(this.id);
         return this;
     }
