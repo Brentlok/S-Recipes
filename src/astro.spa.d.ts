@@ -53,11 +53,3 @@ declare module 'astro-spa' {
   
     export function Spa(props: Props): void;
 }
-
-export declare global {
-	interface Window {
-        spa: {
-            scan: () => void;
-        }
-	}
-}

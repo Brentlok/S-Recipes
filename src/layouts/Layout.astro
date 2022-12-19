@@ -6,9 +6,10 @@ import './global.css';
 
 export interface Props {
 	title: string;
+    noNav?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, noNav } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -21,7 +22,7 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-        <Nav />
+        {!noNav && <Nav client:idle />}
         <main class="py-20 px-6">
             <slot />
         </main>
