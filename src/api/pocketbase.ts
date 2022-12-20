@@ -45,14 +45,14 @@ class PocketBase {
     }
 
     private loadCookieAuth = () => {
-        if(typeof window === 'undefined') {
+        if (typeof window === 'undefined') {
             return;
         }
 
         const cookie = Cookies.get('pb_auth');
         this.isInitialized.set(true);
-        
-        if(!cookie) {
+
+        if (!cookie) {
             return;
         }
 
@@ -62,8 +62,8 @@ class PocketBase {
     list = <T extends Collections>(collection: T) =>
         this.client.collection(collection).getList<Data<T> & BaseSystemFields>();
 
-    get = <T extends Collections>(collection: T, id: string) =>
-        this.client.collection(collection).getOne<Data<T> & BaseSystemFields>(id);
+    get = <T extends Collections>(collection: T, id: string, expand?: string) =>
+        this.client.collection(collection).getOne<Data<T> & BaseSystemFields>(id, { expand });
 
     create = <T extends Collections>(collection: T, data: Data<T>) => {
         return this.client.collection(collection).create<Data<T>>(data);
@@ -89,6 +89,22 @@ class PocketBase {
         } catch (err) {
             this.auth.clear();
             console.error(new Error('Failed to login', { cause: err }));
+            return false;
+        }
+    }
+
+    register = async (name: string, login: string, password: string) => {
+        try {
+            await this.client.collection(Collections.Users).create<UsersRecord>({
+                username: login,
+                name,
+                password,
+                passwordConfirm: password,
+            });
+            return this.login(login, password);
+        } catch (err) {
+            this.auth.clear();
+            console.error(new Error('Failed to register', { cause: err }));
             return false;
         }
     }

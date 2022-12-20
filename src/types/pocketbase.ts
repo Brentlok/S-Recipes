@@ -34,11 +34,12 @@ export type RecipesRecord = {
 	title: string
 	description: string
 	image?: string
+	user: RecordIdString
 }
 
 export type UsersRecord = {
 	name?: string
-	avatar?: string
+	recipes?: RecordIdString
 }
 
 // Response types include system fields and match responses from the PocketBase API
