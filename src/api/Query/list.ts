@@ -27,7 +27,6 @@ export class List<T extends Collections> extends Query<T> {
         this.isError.set(false);
 
         try {
-            console.log(this.filter?.filter);
             const res = await pocketbase.list(this.collection, this.filter?.filter);
             this.data.set(res.items);
             this.isLoading.set(false);

@@ -1,6 +1,7 @@
 <script type="ts">
     import { Filter, useList } from '~/api';
     import type { Data } from '~/api/pocketbase';
+    import Loading from '~/components/Loading.svelte';
     import Recipes from '~/components/Recipes.svelte';
     import { watchLinks } from '~/hooks';
     import { BaseSystemFields, Collections } from '~/types';
@@ -12,7 +13,7 @@
     export let categories: Array<Category>;
     export let recipes: Array<Data<Collections.Recipes> & BaseSystemFields>;
     const list = useList(Collections.Recipes).fillWith(recipes);
-    const { items } = list;
+    const { items, isLoading } = list;
 
     const filter = new Filter(list);
     list.setFilter(filter);
@@ -53,3 +54,7 @@
     </div>
     <Recipes recipes={$items} />
 </div>
+
+{#if $isLoading}
+    <Loading />
+{/if}
