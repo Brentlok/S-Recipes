@@ -1,2 +1,2 @@
 export { pocketbase } from './pocketbase';
-export * from './query';
+export * from './Query';

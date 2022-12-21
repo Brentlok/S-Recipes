@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 import { writable } from 'svelte/store';
 import {
     BaseSystemFields,
+    CategoriesRecord,
     Collections,
     ImageSize,
     RecipesRecord,
@@ -11,6 +12,7 @@ import {
 
 export type Data<T> =
     T extends Collections.Recipes ? RecipesRecord :
+    T extends Collections.Categories ? CategoriesRecord :
     never;
 
 const getThumbByImageSize = (imageSize: ImageSize) => {

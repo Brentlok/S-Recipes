@@ -1,8 +1,8 @@
 ---
 import { pocketbase } from '~/api';
 import Layout from '~/layouts/Layout.astro';
-import Recipe from '~/partials/Recipe.svelte';
 import { Collections } from '~/types';
+import Recipe from '~/views/Recipe.svelte';
 
 const recipe = await pocketbase.get(
     Collections.Recipes,

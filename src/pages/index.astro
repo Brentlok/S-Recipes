@@ -1,12 +1,15 @@
 ---
 import { pocketbase } from '~/api';
-import Recipes from '~/components/Recipes.svelte';
 import Layout from '~/layouts/Layout.astro';
 import { Collections } from '~/types';
+import Home from '~/views/Home.svelte';
 
 const recipes = await pocketbase.list(Collections.Recipes);
+const categories = (await pocketbase.list(Collections.Categories)).items.map(
+    (x) => x.name
+);
 ---
 
 <Layout title="S-Recpies">
-    <Recipes client:idle recipes={recipes.items} />
+    <Home client:idle recipes={recipes.items} categories={categories} />
 </Layout>

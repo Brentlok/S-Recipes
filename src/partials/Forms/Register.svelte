@@ -50,11 +50,13 @@
             error={errorsDisplayed.includes('login')}
         />
         <Input
+            type="password"
             name="Password"
             bind:value={password}
             error={errorsDisplayed.includes('password')}
         />
         <Input
+            type="password"
             name="Confirm Password"
             bind:value={confirmPassword}
             error={errorsDisplayed.includes('confirmPassword')}

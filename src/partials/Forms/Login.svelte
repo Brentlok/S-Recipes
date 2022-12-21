@@ -38,6 +38,7 @@
             error={errorsDisplayed.includes('login')}
         />
         <Input
+            type="password"
             name="Password"
             bind:value={password}
             error={errorsDisplayed.includes('password')}

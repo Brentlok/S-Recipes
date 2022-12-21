@@ -9,3 +9,11 @@ input[data-error='true'] {
 span[data-error='true'] {
     @apply opacity-100;
 }
+
+.category {
+    @apply bg-stone-400 text-white p-2 rounded-md px-4 cursor-pointer hover:bg-stone-500 transition-colors;
+}
+
+.category[data-is-active='true'] {
+    @apply bg-stone-500;
+}
