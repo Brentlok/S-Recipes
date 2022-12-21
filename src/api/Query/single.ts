@@ -15,7 +15,7 @@ export class Single<T extends Collections> extends Query<T> {
         this.isError.set(false);
 
         try {
-            const res = await pocketbase.get(this.collection, id, { expand });
+            const res = await pocketbase.get(this.collection, id, expand);
             this.data.set(res);
             this.isLoading.set(false);
         } catch (err) {

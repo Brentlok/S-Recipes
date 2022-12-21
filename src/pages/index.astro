@@ -6,7 +6,7 @@ import Home from '~/views/Home.svelte';
 
 const recipes = await pocketbase.list(Collections.Recipes);
 const categories = (await pocketbase.list(Collections.Categories)).items.map(
-    (x) => x.name
+    (x) => ({ title: x.name, id: x.id })
 );
 ---
 

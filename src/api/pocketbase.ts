@@ -61,8 +61,8 @@ class PocketBase {
         this.auth.loadFromCookie(cookie);
     }
 
-    list = <T extends Collections>(collection: T) =>
-        this.client.collection(collection).getList<Data<T> & BaseSystemFields>();
+    list = <T extends Collections>(collection: T, filter?: string) =>
+        this.client.collection(collection).getList<Data<T> & BaseSystemFields>(1, 50, { ...filter ? { filter } : {} });
 
     get = <T extends Collections>(collection: T, id: string, expand?: string) =>
         this.client.collection(collection).getOne<Data<T> & BaseSystemFields>(id, { expand });

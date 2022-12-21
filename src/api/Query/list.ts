@@ -2,12 +2,19 @@ import type { BaseSystemFields, Collections } from "~/types";
 import { Query } from "./query";
 import { Data, pocketbase } from "../pocketbase";
 import { writable } from "svelte/store";
+import type { Filter } from "./filter";
 
 export class List<T extends Collections> extends Query<T> {
     data = writable<Array<Data<T> & BaseSystemFields>>([]);
 
+    filter?: Filter<T>;
+
     get items() {
         return this.data;
+    }
+
+    setFilter = (filter: Filter<T>) => {
+        this.filter = filter;
     }
 
     fillWith = (data: Array<Data<T> & BaseSystemFields>) => {
@@ -20,7 +27,8 @@ export class List<T extends Collections> extends Query<T> {
         this.isError.set(false);
 
         try {
-            const res = await pocketbase.list(this.collection);
+            console.log(this.filter?.filter);
+            const res = await pocketbase.list(this.collection, this.filter?.filter);
             this.data.set(res.items);
             this.isLoading.set(false);
         } catch (err) {
