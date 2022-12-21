@@ -1,0 +1,44 @@
+---
+import '@fontsource/poppins';
+import { Spa } from 'astro-spa';
+import './global.css';
+
+export interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+    </head>
+    <body>
+        <div class="absolute top-0 left-0 w-full min-h-screen flex">
+            <div class="w-1/2 bg-stone-400 grid place-items-center text-white">
+                <a
+                    href="/"
+                    class="hover:text-stone-200 text-xl transition-colors flex items-center gap-2 absolute top-8 left-8"
+                >
+                    <img class="w-9 h-auto" src="/logo.svg" alt="" />
+                    S-Recipes
+                </a>
+                <div class="flex flex-col gap-6 items-center">
+                    <img class="w-2/3 m-auto" src="/sign.svg" alt="" />
+                    <h1 class="text-3xl font-bold">S-Recipes</h1>
+                    <span class="tracking-wider">
+                        A place where you have your recipes at hand
+                    </span>
+                </div>
+            </div>
+            <slot />
+        </div>
+        <Spa defaultAnimation={false} progressBar={false} />
+    </body>
+</html>

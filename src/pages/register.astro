@@ -1,12 +1,8 @@
 ---
-import Layout from '~/layouts/Layout.astro';
+import Sign from '~/layouts/Sign.astro';
 import { Forms } from '~/partials/index.svelte';
 ---
 
-<Layout title="Register" noNav={true}>
-    <div
-        class="absolute top-1/2 -translate-y-1/2 w-full place-items-center grid"
-    >
-        <Forms.Register client:idle />
-    </div>
-</Layout>
+<Sign title="Sign up">
+    <Forms.Register client:idle />
+</Sign>

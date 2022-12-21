@@ -1,6 +1,5 @@
 <script type="ts">
     import { pocketbase } from '~/api';
-    import Error from '~/components/Error.svelte';
     import Input from '~/components/Input.svelte';
     import { validateNonEmpty } from '~/utils';
 
@@ -34,43 +33,47 @@
     };
 </script>
 
-<form
-    on:submit|preventDefault={submit}
-    class="border-2 border-stone-400 p-4 rounded-3xl max-w-lg w-full flex flex-col gap-2"
->
-    <h1 class="text-4xl text-stone-500 m-auto font-bold">Register</h1>
-    <Input
-        name="Name"
-        bind:value={name}
-        error={errorsDisplayed.includes('name')}
-    />
-    <Input
-        name="Login"
-        bind:value={login}
-        error={errorsDisplayed.includes('login')}
-    />
-    <Input
-        name="Password"
-        bind:value={password}
-        error={errorsDisplayed.includes('password')}
-    />
-    <Input
-        name="Confirm Password"
-        bind:value={confirmPassword}
-        error={errorsDisplayed.includes('confirmPassword')}
-    />
-    <br />
-    <button
-        type="submit"
-        class="text-2xl border-2 py-2 px-4 mt-4 w-1/2 mx-auto rounded-full border-stone-400 hover:text-white hover:bg-stone-400 transition-colors"
+<div class="w-1/2 min-h-screen flex">
+    <form
+        on:submit|preventDefault={submit}
+        class="flex flex-col items-start m-auto"
     >
-        Submit
-    </button>
-    <button
-        type="button"
-        on:click={() => window.spa.navigate('/login')}
-        class="text-md border-2 px-2 mx-auto rounded-full border-stone-400 hover:text-white hover:bg-stone-400 transition-colors"
-    >
-        Login
-    </button>
-</form>
+        <h1 class="text-4xl text-stone-500 font-bold mb-14">Sign up</h1>
+        <Input
+            name="Name"
+            bind:value={name}
+            error={errorsDisplayed.includes('name')}
+        />
+        <Input
+            name="Login"
+            bind:value={login}
+            error={errorsDisplayed.includes('login')}
+        />
+        <Input
+            name="Password"
+            bind:value={password}
+            error={errorsDisplayed.includes('password')}
+        />
+        <Input
+            name="Confirm Password"
+            bind:value={confirmPassword}
+            error={errorsDisplayed.includes('confirmPassword')}
+        />
+        <br />
+        <div class="flex flex-col w-full">
+            <button
+                type="submit"
+                class="text-2xl py-2 px-12 my-4 rounded-full text-white bg-stone-400 hover:bg-stone-500 transition-colors"
+            >
+                Submit
+            </button>
+            <button
+                type="button"
+                on:click={() => window.spa.navigate('/login')}
+                class="text-md hover:underline transition-colors mx-auto"
+            >
+                Sign in
+            </button>
+        </div>
+    </form>
+</div>

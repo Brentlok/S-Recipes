@@ -5,7 +5,7 @@ import { Nav } from '~/components/index.svelte';
 import './global.css';
 
 export interface Props {
-	title: string;
+    title: string;
     noNav?: boolean;
 }
 
@@ -14,21 +14,18 @@ const { title, noNav } = Astro.props;
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+    </head>
+    <body>
         {!noNav && <Nav client:idle />}
         <main class="py-20 px-6">
             <slot />
         </main>
-        <Spa
-            defaultAnimation={false}
-            progressBar={false}
-        />
-	</body>
+        <Spa defaultAnimation={false} progressBar={false} />
+    </body>
 </html>
