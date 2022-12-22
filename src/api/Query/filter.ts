@@ -7,31 +7,59 @@ type DataValues<T> = ExtractValues<Data<T>>;
 type DataKeys<T> = keyof Data<T>;
 
 export class Filter<T extends Collections> {
-    filters: Array<{ field: DataKeys<T>; eq: DataValues<T> }> = [];
+    equals: Array<{ field: DataKeys<T>; val: DataValues<T> }> = [];
+
+    like: Array<{ field: DataKeys<T>; val: DataValues<T> }> = [];
 
     filter = '';
 
     constructor(readonly list: List<T>) { }
 
     updateFilters = () => {
-        const filters = this.filters.map(({ field, eq }) => {
-            const equals = typeof eq === 'string' ? `"${eq}"` : eq;
-            return `${String(field)}=${equals}`;
+        const filters: string[] = [];
+        const equals = this.equals.map(({ field, val }) => {
+            const value = typeof val === 'string' ? `"${val}"` : val;
+            return `${String(field)}=${value}`;
         });
 
-        this.filter = filters.join(' || ');
+        if (this.equals.length > 0) {
+            filters.push(`(${equals.join(' || ')})`);
+        }
+
+        const like = this.like.map(({ field, val }) => {
+            const value = typeof val === 'string' ? `"${val}"` : val;
+            return `${String(field)}~${value}`;
+        });
+
+        if (this.like.length > 0) {
+            filters.push(`(${like.join(' || ')})`);
+        }
+
+        this.filter = filters.join(' && ');
         this.list.refetch();
     }
 
-    addField = (field: DataKeys<T>, eq: DataValues<T>) => {
-        this.filters.push({ field, eq });
+    updateLike = <Empty extends DataValues<T>>(field: DataKeys<T>, val: DataValues<T>, empty: Empty) => {
+        this.like = this.like.filter(filter => filter.field !== field);
+
+        if (val === empty) {
+            this.updateFilters();
+            return;
+        }
+
+        this.like.push({ field, val });
         this.updateFilters();
     }
 
-    removeField = (field: DataKeys<T>, eq: DataValues<T>) => {
-        this.filters = this.filters.filter(filter => filter.field !== field
+    addEquals = (field: DataKeys<T>, val: DataValues<T>) => {
+        this.equals.push({ field, val });
+        this.updateFilters();
+    }
+
+    removeEquals = (field: DataKeys<T>, val: DataValues<T>) => {
+        this.equals = this.equals.filter(filter => filter.field !== field
             ? true
-            : filter.eq !== eq
+            : filter.val !== val
         );
         this.updateFilters();
     }

@@ -20,15 +20,22 @@
 
     let search = '';
     let selected: string[] = [];
+    let timer: ReturnType<typeof setTimeout>;
+
+    $: if (typeof window !== 'undefined') {
+        window.clearTimeout(timer);
+        timer = setTimeout(() => {
+            filter.updateLike('title', search, '');
+        }, 300);
+    }
 
     const toggle = (categoryId: string) => {
         if (selected.includes(categoryId)) {
-            filter.removeField('category', categoryId);
+            filter.removeEquals('category', categoryId);
             selected = selected.filter((item) => item !== categoryId);
             return;
         }
-
-        filter.addField('category', categoryId);
+        filter.addEquals('category', categoryId);
         selected = [...selected, categoryId];
     };
 </script>
