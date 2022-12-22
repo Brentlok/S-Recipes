@@ -42,7 +42,7 @@
 
 <div class="flex flex-col items-center gap-10">
     <input
-        class="text-xl shadow-md p-2 rounded-md w-min"
+        class="text-xl shadow-md p-2 rounded-md w-full max-w-sm"
         type="text"
         bind:value={search}
         placeholder="Search for recipe..."

@@ -33,7 +33,7 @@
     };
 </script>
 
-<div class="w-1/2 min-h-screen flex">
+<div class="w-full md:w-1/2 min-h-screen flex">
     <form
         on:submit|preventDefault={submit}
         class="flex flex-col items-start m-auto"
