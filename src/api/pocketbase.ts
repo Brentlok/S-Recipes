@@ -117,4 +117,15 @@ class PocketBase {
     }
 }
 
-export const pocketbase = new PocketBase('https://api-srecipes.hbieszczad.pl');
+const getApiURL = () => {
+    if (
+        process.env.PRODUCTION === 'true' &&
+        typeof window === 'undefined'
+    ) {
+        return 'http://127.0.0.1:8091';
+    }
+
+    return 'https://api-srecipes.hbieszczad.pl';
+}
+
+export const pocketbase = new PocketBase(getApiURL());
