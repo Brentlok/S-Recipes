@@ -119,7 +119,7 @@ class PocketBase {
 
 const getApiURL = () => {
     if (
-        process.env.PRODUCTION === 'true' &&
+        import.meta.env.PRODUCTION === 'true' &&
         typeof window === 'undefined'
     ) {
         return 'http://127.0.0.1:8091';
