@@ -19,3 +19,15 @@ export const validateNonEmpty = <T extends Record<string, string>>(data: T) => {
 
     return errors;
 }
+
+export const objToFormData = (obj: Record<string, unknown>) => {
+    const formData = new FormData();
+
+    for (const key in obj) {
+        const itemRaw = obj[key];
+        const item = itemRaw instanceof Blob ? itemRaw : String(itemRaw);
+        formData.append(key, item);
+    }
+
+    return formData;
+}

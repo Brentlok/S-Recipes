@@ -13,9 +13,12 @@ export class Filter<T extends Collections> {
 
     filter = '';
 
+    initialized = false;
+
     constructor(readonly list: List<T>) { }
 
     updateFilters = () => {
+        this.initialized = true;
         const filters: string[] = [];
         const equals = this.equals.map(({ field, val }) => {
             const value = typeof val === 'string' ? `"${val}"` : val;

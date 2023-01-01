@@ -2,16 +2,6 @@
     import { pocketbase } from '~/api';
 
     const { user, isInitialized } = pocketbase;
-
-    const logout = () => {
-        const res = window.confirm('Do you want to logout?');
-
-        if (!res) {
-            return;
-        }
-
-        pocketbase.logout();
-    };
 </script>
 
 <nav
@@ -26,13 +16,12 @@
     </a>
     {#if $isInitialized}
         {#if $user}
-            <div
+            <a
                 class="hover:text-stone-200 transition-colors cursor-pointer"
-                on:click={logout}
-                on:keydown={logout}
+                href="/profile"
             >
                 {$user.name}
-            </div>
+            </a>
         {:else}
             <a href="/login" class="hover:text-stone-200 transition-colors">
                 Login

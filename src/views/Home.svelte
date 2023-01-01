@@ -22,7 +22,7 @@
     let selected: string[] = [];
     let timer: ReturnType<typeof setTimeout>;
 
-    $: if (typeof window !== 'undefined') {
+    $: if (typeof window !== 'undefined' && filter.initialized) {
         window.clearTimeout(timer);
         timer = setTimeout(() => {
             filter.updateLike('title', search, '');

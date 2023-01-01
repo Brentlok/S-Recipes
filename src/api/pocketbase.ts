@@ -9,6 +9,7 @@ import {
     RecipesRecord,
     UsersRecord,
 } from '~/types';
+import { objToFormData } from '~/utils';
 
 export type Data<T> =
     T extends Collections.Recipes ? RecipesRecord :
@@ -46,6 +47,10 @@ class PocketBase {
         return this.client.authStore;
     }
 
+    get userId() {
+        return this.auth.model?.id ?? '';
+    }
+
     private loadCookieAuth = () => {
         if (typeof window === 'undefined') {
             return;
@@ -62,13 +67,17 @@ class PocketBase {
     }
 
     list = <T extends Collections>(collection: T, filter?: string) =>
-        this.client.collection(collection).getList<Data<T> & BaseSystemFields>(1, 50, { ...filter ? { filter } : {} });
+        this.client.collection(collection).getList<Data<T> & BaseSystemFields>(1, 10, { ...filter ? { filter } : {} });
 
     get = <T extends Collections>(collection: T, id: string, expand?: string) =>
         this.client.collection(collection).getOne<Data<T> & BaseSystemFields>(id, { expand });
 
-    create = <T extends Collections>(collection: T, data: Data<T>) => {
-        return this.client.collection(collection).create<Data<T>>(data);
+    create = async <T extends Collections>(collection: T, data: Data<T>, hasFiles = false) => {
+        const send = hasFiles ? objToFormData(data) : data;
+
+        const res = await this.client.collection(collection).create<Data<T>>(send);
+
+        return res as Data<T> & BaseSystemFields;
     }
 
     getFile = <T extends Collections>(record: Data<T>, path?: string, imageSize = ImageSize.small) => {
@@ -114,6 +123,15 @@ class PocketBase {
     logout = async () => {
         this.auth.clear();
         Cookies.remove('pb_auth');
+    }
+
+    extractFromCookie = (cookie: string) => {
+        if (cookie === '') {
+            return;
+        }
+        const client = new Client('');
+        client.authStore.loadFromCookie(cookie);
+        return client.authStore.model as { name: string, id: string } | null;
     }
 }
 

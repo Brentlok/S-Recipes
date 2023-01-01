@@ -17,3 +17,12 @@ span[data-error='true'] {
 .category[data-is-active='true'] {
     @apply bg-stone-500;
 }
+
+.textarea {
+    @apply border-2 border-stone-400 rounded-md p-2 resize-none break-words overflow-hidden block mb-4;
+    min-height: 6rem;
+}
+
+button[data-is-disabled='true'] {
+    @apply bg-gray-400 text-white cursor-not-allowed opacity-75 hover:bg-gray-400;
+}

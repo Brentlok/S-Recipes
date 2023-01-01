@@ -18,7 +18,6 @@
         const res = await pocketbase.login(login, password);
 
         if (!res) {
-            // TODO handle error login
             return;
         }
 

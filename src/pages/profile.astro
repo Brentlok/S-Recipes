@@ -1,0 +1,24 @@
+---
+import Cookies from 'js-cookie';
+import { pocketbase } from '~/api';
+import Layout from '~/layouts/Layout.astro';
+import { Collections } from '~/types';
+import Profile from '~/views/Profile.svelte';
+
+const cookie = Astro.request.headers.get('cookie') ?? '';
+const parsedCookie = Cookies.converter.read(cookie, 'pb_auth').slice(8);
+const profile = pocketbase.extractFromCookie(parsedCookie);
+
+if (!profile) {
+    return Astro.redirect('/');
+}
+
+const userRecipes = await pocketbase.list(
+    Collections.Recipes,
+    `user="${profile.id}"`
+);
+---
+
+<Layout title={`${profile.name} - Profile`}>
+    <Profile recipes={userRecipes.items} client:idle />
+</Layout>

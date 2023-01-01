@@ -1,0 +1,14 @@
+---
+import { pocketbase } from '~/api';
+import Layout from '~/layouts/Layout.astro';
+import { Collections } from '~/types';
+import AddRecipe from '~/views/AddRecipe.svelte';
+
+const categories = (await pocketbase.list(Collections.Categories)).items.map(
+    (x) => ({ title: x.name, id: x.id })
+);
+---
+
+<Layout title="Add new recipe">
+    <AddRecipe categories={categories} client:idle />
+</Layout>
