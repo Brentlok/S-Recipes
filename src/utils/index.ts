@@ -5,7 +5,7 @@ export const printDate = (data: string) => {
         return '';
     }
 
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 }
 
 export const validateNonEmpty = <T extends Record<string, string>>(data: T) => {
