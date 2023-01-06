@@ -80,6 +80,10 @@ class PocketBase {
         return res as Data<T> & BaseSystemFields;
     }
 
+    remove = async <T extends Collections>(collection: T, id: string) => {
+        return this.client.collection(collection).delete(id);
+    }
+
     getFile = <T extends Collections>(record: Data<T>, path?: string, imageSize = ImageSize.small) => {
         if (!path) {
             return '';
