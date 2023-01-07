@@ -1,4 +1,4 @@
-# AnimeList
+# S-Recipes
 
 Side project created mainly with [Astro](https://astro.build/) and [Svelte](https://svelte.dev/)
 
